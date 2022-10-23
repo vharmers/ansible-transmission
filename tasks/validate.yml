@@ -1,0 +1,27 @@
+---
+- name: Fail if no password is configured for RPC access
+  ansible.builtin.fail:
+    msg: Please configure a RPC password by setting the 'transmission_rpc_password' variable
+  when:
+    - transmission_rpc_enabled
+    - transmission_rpc_authentication_required
+    - transmission_rpc_password | length == 0
+
+- name: Fail if password contains illegal characters
+  ansible.builtin.fail:
+    msg: Please ensure your password does not start with a '{'. This characted has a special meaning in Transmission.
+  when: transmission_rpc_password is match("{")
+
+- name: Fail if completion script is enabled but not set
+  ansible.builtin.fail:
+    msg: Torrent done script enabled but no script path set
+  when:
+    - transmission_script_torrent_done_enabled
+    - transmission_script_torrent_done_filename | length == 0
+
+- name: Fail if blocklist has been enabled but not set
+  ansible.builtin.fail:
+    msg: Blocklist enabled but url not set
+  when:
+    - transmission_blocklist_enabled
+    - transmission_blocklist_url | length == 0

@@ -1,0 +1,44 @@
+---
+- name: Ensure Transmission package is installed
+  ansible.builtin.package:
+    name: transmission-daemon
+    state: present
+
+- name: Ensure Transmission cli is installed if requested
+  ansible.builtin.package:
+    name: transmission-cli
+    state: "{{ transmission_cli | ternary('present', 'absent') }}"
+
+- name: Ensure home directory exits
+  ansible.builtin.file:
+    path: "{{ transmission_user_home_dir }}"
+    owner: "{{ transmission_user }}"
+    group: "{{ transmission_group }}"
+    mode: 0755
+    state: directory
+
+- name: Ensure transmission group exists
+  ansible.builtin.group:
+    name: "{{ transmission_group }}"
+
+- name: Ensure transmission user exists
+  ansible.builtin.user:
+    name: "{{ transmission_user }}"
+    group: "{{ transmission_group }}"
+    shell: /usr/sbin/nologin
+    home: "{{ transmission_user_home_dir }}"
+
+- name: Ensure systemd service is installed
+  ansible.builtin.template:
+    src: transmission.service.j2
+    dest: "/etc/systemd/system/{{ transmission_service }}.service"
+    owner: root
+    group: root
+    mode: 0664
+  register: transmission_service_install
+  notify: Restart transmission
+
+- name: Ensure systemd updates the service # noqa no-handler
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  when: transmission_service_install.changed

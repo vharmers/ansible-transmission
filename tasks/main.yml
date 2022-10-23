@@ -1,0 +1,25 @@
+---
+- name: Import validation tasks
+  ansible.builtin.import_tasks: validate.yml
+  become: no
+  tags:
+    - transmission
+    - validate
+    - transmission-validate
+    - always
+
+- name: Import installation tasks
+  ansible.builtin.import_tasks: install.yml
+  become: yes
+  tags:
+    - transmission
+    - install
+    - transmission-install
+
+- name: Import configuration tasks
+  ansible.builtin.import_tasks: configure.yml
+  become: yes
+  tags:
+    - transmission
+    - configure
+    - transmission-configure

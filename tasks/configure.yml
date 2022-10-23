@@ -1,0 +1,66 @@
+---
+- name: Ensure configuration directory exists
+  ansible.builtin.file:
+    path: "{{ transmission_config_dir }}"
+    owner: "{{ transmission_user }}"
+    group: "{{ transmission_group }}"
+    mode: 0755
+    state: directory
+
+- name: Ensure configuration is present
+  ansible.builtin.template:
+    src: settings.json.j2
+    dest: "{{ transmission_config_dir }}/settings.json"
+    owner: "{{ transmission_user }}"
+    group: "{{ transmission_group }}"
+    mode: 0600
+  changed_when: False  # The transmission-daemon also writes changes to settings.json
+
+- name: Ensure download directory exists
+  ansible.builtin.file:
+    path: "{{ transmission_download_dir }}"
+    owner: "{{ transmission_user }}"
+    group: "{{ transmission_group }}"
+    mode: 0755
+    state: directory
+
+- name: Ensure incomplete download directory exists
+  ansible.builtin.file:
+    path: "{{ transmission_incomplete_dir }}"
+    owner: "{{ transmission_user }}"
+    group: "{{ transmission_group }}"
+    mode: 0755
+    state: directory
+  when: transmission_incomplete_dir_enabled
+
+- name: Ensure watch directory exists
+  ansible.builtin.file:
+    path: "{{ transmission_watch_dir }}"
+    owner: "{{ transmission_user }}"
+    group: "{{ transmission_group }}"
+    mode: 0755
+    state: directory
+  when: transmission_watch_dir_enabled
+
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
+# Transmission needs to be forced to reread the settings from settings.json
+# before it is restarted or stopped. It will otherwise overwrite the
+# changes made by Ansible with its current running config.
+- name: Force transmission to reload the config file if it is running
+  ansible.builtin.service:
+    name: "{{ transmission_service }}"
+    state: reloaded
+  when: ansible_facts.services[transmission_service + ".service"].state == "running"
+  changed_when: False
+
+- name: Ensure the transmission service is in the proper running state
+  ansible.builtin.service:
+    name: "{{ transmission_service }}"
+    state: "{{ transmission_enabled | ternary('started', 'stopped') }}"
+
+- name: Ensure the transmission service is in the proper startup state
+  ansible.builtin.service:
+    name: "{{ transmission_service }}"
+    enabled: "{{ transmission_enabled }}"

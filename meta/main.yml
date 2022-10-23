@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Valentijn Harmers
+  description: Role for installing and configuring the Transmission Torrent Service
+  license: MIT
+  role_name: transmission
+  namespace: vharmers
+  min_ansible_version: "6.5"
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+  galaxy_tags:
+    - bittorrent
+    - transmission
+dependencies: []

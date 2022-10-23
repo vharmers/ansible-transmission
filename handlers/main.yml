@@ -1,0 +1,7 @@
+---
+- name: Restart transmission
+  ansible.builtin.service:
+    name: "{{ transmission_service }}"
+    state: restarted
+  become: yes
+  when: transmission_enabled

@@ -1,0 +1,165 @@
+---
+#
+# General
+#
+
+transmission_enabled: yes
+transmission_cli: yes
+transmission_config_dir: /etc/transmission-daemon
+transmission_user: debian-transmission
+transmission_user_home_dir: /var/lib/transmission-daemon
+transmission_group: debian-transmission
+transmission_service: transmission-daemon
+
+#
+# Networking
+#
+
+transmission_utp_enabled: yes
+transmission_port_forwarding_enabled: no
+transmission_encryption: prefer
+transmission_encryption_options: [no-prefer, prefer, require]
+
+#
+# Bandwith control
+#
+
+# Limit download speed
+transmission_speed_limit_down_enabled: yes
+transmission_speed_limit_down: 5000
+
+# Limit upload speed
+transmission_speed_limit_up_enabled: yes
+transmission_speed_limit_up: 1000
+
+# Alternate speeds
+transmission_alt_speed_enabled: no
+transmission_alt_speed_down: 50
+transmission_alt_speed_up: 50
+
+# Alternate speeds schedule
+transmission_alt_speed_time_enabled: no
+transmission_alt_speed_time_begin: 540
+transmission_alt_speed_time_day: "{{ transmission_alt_speed_time_day_options['AllDays'] }}"
+transmission_alt_speed_time_day_options:
+  Sunday: 1
+  Monday: 2
+  Tuesday: 4
+  Wednesday: 8
+  Thursday: 16
+  Friday: 32
+  Saturday: 64
+  Weekdays: 62
+  Weekends: 65
+  AllDays: 127
+transmission_alt_speed_time_end: 1020
+
+# Torrent ratio limit
+transmission_ratio_limit_enabled: no
+transmission_ratio_limit: 2
+
+# Torrent download queue
+transmission_download_queue_enabled: yes
+transmission_download_queue_size: 5
+
+# Torrent seeding queue
+transmission_seed_queue_enabled: no
+transmission_seed_queue_size: 10
+
+# Torrent seeding idle limit
+transmission_idle_seeding_limit_enabled: no
+transmission_idle_seeding_limit: 30
+
+# Torrent upload limits
+transmission_upload_limit_enabled: no
+transmission_upload_limit: 100
+transmission_upload_slots_per_torrent: 14
+
+# Stalled torrents
+transmission_queue_stalled_enabled: yes
+transmission_queue_stalled_minutes: 30
+
+#
+# Storage
+#
+
+transmission_download_dir: "{{ transmission_user_home_dir }}/downloads"
+transmission_incomplete_dir_enabled: no
+transmission_incomplete_dir: "{{ transmission_download_dir }}/incomplete"
+transmission_rename_partial_files: yes
+transmission_scrape_paused_torrents_enabled: yes
+transmission_preallocation: fast
+transmission_preallocation_options: ['off', fast, full]
+transmission_umask: "022"
+transmission_prefetch_enabled: yes
+transmission_cache_size_mb: 4
+transmission_watch_dir_enabled: no
+transmission_watch_dir: "{{ transmission_user_home_dir }}/watch"
+
+#
+# Peers
+#
+
+transmission_pex_enabled: yes
+transmission_lpd_enabled: no
+transmission_bind_address_ipv4: "0.0.0.0"
+transmission_bind_address_ipv6: "::"
+transmission_peer_congestion_algorithm: ""
+transmission_peer_id_ttl_hours: 6
+transmission_peer_limit_global: 200
+transmission_peer_limit_per_torrent: 50
+transmission_peer_port: 51413
+transmission_peer_port_random_on_start: no
+transmission_peer_port_random_high: 65535
+transmission_peer_port_random_low: 49152
+transmission_peer_socket_tos: default
+
+#
+# RPC
+#
+
+transmission_rpc_enabled: yes
+transmission_rpc_bind_address: "0.0.0.0"
+transmission_rpc_port: 9091
+transmission_rpc_url: /transmission/
+
+# Access control
+transmission_rpc_host_whitelist_enabled: yes
+transmission_rpc_host_whitelist: []
+transmission_rpc_whitelist_enabled: yes
+transmission_rpc_whitelist:
+  - "127.0.0.1"
+
+# Authentication
+transmission_rpc_authentication_required: yes
+transmission_rpc_username: transmission
+transmission_rpc_password: ""
+
+#
+# Scripting
+#
+
+transmission_script_torrent_done_enabled: "{{ transmission_script_torrent_done_filename | length > 0 }}"
+transmission_script_torrent_done_filename: ""
+
+#
+# Blacklist
+#
+
+transmission_blocklist_enabled: "{{ transmission_blocklist_url | length > 0 }}"
+transmission_blocklist_url: ""
+
+#
+# Logging
+#
+
+transmission_message_level: error
+transmission_message_level_options: [none, error, info, debug]
+
+#
+# Misc
+#
+
+transmission_dht_enabled: yes
+transmission_start_added_torrents: yes
+transmission_trash_original_torrent_files: no
