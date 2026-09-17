@@ -9,14 +9,6 @@
     name: transmission-cli
     state: "{{ transmission_cli | ternary('present', 'absent') }}"
 
-- name: Ensure home directory exits
-  ansible.builtin.file:
-    path: "{{ transmission_user_home_dir }}"
-    owner: "{{ transmission_user }}"
-    group: "{{ transmission_group }}"
-    mode: 0755
-    state: directory
-
 - name: Ensure transmission group exists
   ansible.builtin.group:
     name: "{{ transmission_group }}"
@@ -27,6 +19,14 @@
     group: "{{ transmission_group }}"
     shell: /usr/sbin/nologin
     home: "{{ transmission_user_home_dir }}"
+
+- name: Ensure home directory exits
+  ansible.builtin.file:
+    path: "{{ transmission_user_home_dir }}"
+    owner: "{{ transmission_user }}"
+    group: "{{ transmission_group }}"
+    mode: '0755'
+    state: directory
 
 - name: Ensure systemd service is installed
   ansible.builtin.template:
