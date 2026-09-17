@@ -34,7 +34,7 @@
     dest: "/etc/systemd/system/{{ transmission_service }}.service"
     owner: root
     group: root
-    mode: 0664
+    mode: '0664'
   register: transmission_service_install
   notify: Restart transmission
 
