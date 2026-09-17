@@ -3,7 +3,7 @@
   ansible.builtin.fail:
     msg: Please configure a RPC password by setting the 'transmission_rpc_password' variable
   when:
-    - transmission_rpc_enabled
+    - transmission_rpc_enable
     - transmission_rpc_authentication_required
     - transmission_rpc_password | length == 0
 
@@ -16,12 +16,42 @@
   ansible.builtin.fail:
     msg: Torrent done script enabled but no script path set
   when:
-    - transmission_script_torrent_done_enabled
+    - transmission_script_torrent_done_enable
     - transmission_script_torrent_done_filename | length == 0
 
 - name: Fail if blocklist has been enabled but not set
   ansible.builtin.fail:
     msg: Blocklist enabled but url not set
   when:
-    - transmission_blocklist_enabled
+    - transmission_blocklist_enable
     - transmission_blocklist_url | length == 0
+
+- name: Fail when old variable names are used
+  ansible.builtin.fail:
+    msg: You are still using an old variable name. Please update your config to use the new name
+  when:
+    - transmission_enabled is defined  # Renamed to 'transmission_enable'
+    - transmission_utp_enabled is defined  # Renamed to 'transmission_utp_enable'
+    - transmission_port_forwarding_enabled is defined  # Renamed to 'transmission_port_forwarding_enable'
+    - transmission_speed_limit_down_enabled is defined  # Renamed to 'transmission_speed_limit_down_enable'
+    - transmission_speed_limit_up_enabled is defined  # Renamed to 'transmission_speed_limit_up_enable'
+    - transmission_alt_speed_enabled is defined  # Renamed to 'transmission_alt_speed_enable'
+    - transmission_alt_speed_time_enabled is defined  # Renamed to 'transmission_alt_speed_time_enable'
+    - transmission_ratio_limit_enabled is defined  # Renamed to 'transmission_ratio_limit_enable'
+    - transmission_download_queue_enabled is defined  # Renamed to 'transmission_download_queue_enable'
+    - transmission_seed_queue_enabled is defined  # Renamed to 'transmission_seed_queue_enable'
+    - transmission_idle_seeding_limit_enabled is defined  # Renamed to 'transmission_idle_seeding_limit_enable'
+    - transmission_upload_limit_enabled is defined  # Renamed to 'transmission_upload_limit_enable'
+    - transmission_queue_stalled_enabled is defined  # Renamed to 'transmission_queue_stalled_enable'
+    - transmission_incomplete_dir_enabled is defined  # Renamed to 'transmission_incomplete_dir_enable'
+    - transmission_scrape_paused_torrents_enabled is defined  # Renamed to 'transmission_scrape_paused_torrents_enable'
+    - transmission_prefetch_enabled is defined  # Renamed to 'transmission_prefetch_enable'
+    - transmission_watch_dir_enabled is defined  # Renamed to 'transmission_watch_dir_enable'
+    - transmission_pex_enabled is defined  # Renamed to 'transmission_pex_enable'
+    - transmission_lpd_enabled is defined  # Renamed to 'transmission_lpd_enable'
+    - transmission_rpc_enabled is defined  # Renamed to 'transmission_rpc_enable'
+    - transmission_rpc_host_whitelist_enabled is defined  # Renamed to 'transmission_rpc_host_whitelist_enable'
+    - transmission_rpc_whitelist_enabled is defined  # Renamed to 'transmission_rpc_whitelist_enable'
+    - transmission_script_torrent_done_enabled is defined  # Renamed to 'transmission_script_torrent_done_enable'
+    - transmission_blocklist_enabled is defined  # Renamed to 'transmission_blocklist_enable'
+    - transmission_dht_enabled is defined  # Renamed to 'transmission_dht_enable'

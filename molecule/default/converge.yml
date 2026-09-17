@@ -2,8 +2,8 @@
 - name: Converge
   hosts: all
   vars:
-    transmission_incomplete_dir_enabled: yes
-    transmission_watch_dir_enabled: yes
+    transmission_incomplete_dir_enable: yes
+    transmission_watch_dir_enable: yes
     transmission_rpc_password: "test"
   tasks:
     - name: Ensure latest package cache

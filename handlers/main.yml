@@ -4,4 +4,4 @@
     name: "{{ transmission_service }}"
     state: restarted
   become: yes
-  when: transmission_enabled
+  when: transmission_enable

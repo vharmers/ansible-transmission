@@ -31,7 +31,7 @@
     group: "{{ transmission_group }}"
     mode: 0755
     state: directory
-  when: transmission_incomplete_dir_enabled
+  when: transmission_incomplete_dir_enable
 
 - name: Ensure watch directory exists
   ansible.builtin.file:
@@ -40,7 +40,7 @@
     group: "{{ transmission_group }}"
     mode: 0755
     state: directory
-  when: transmission_watch_dir_enabled
+  when: transmission_watch_dir_enable
 
 - name: Populate service facts
   ansible.builtin.service_facts:
@@ -58,9 +58,9 @@
 - name: Ensure the transmission service is in the proper running state
   ansible.builtin.service:
     name: "{{ transmission_service }}"
-    state: "{{ transmission_enabled | ternary('started', 'stopped') }}"
+    state: "{{ transmission_enable | ternary('started', 'stopped') }}"
 
 - name: Ensure the transmission service is in the proper startup state
   ansible.builtin.service:
     name: "{{ transmission_service }}"
-    enabled: "{{ transmission_enabled }}"
+    enabled: "{{ transmission_enable }}"
