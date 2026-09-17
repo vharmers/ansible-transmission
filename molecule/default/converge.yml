@@ -2,14 +2,14 @@
 - name: Converge
   hosts: all
   vars:
-    transmission_incomplete_dir_enable: yes
-    transmission_watch_dir_enable: yes
+    transmission_incomplete_dir_enable: true
+    transmission_watch_dir_enable: true
     transmission_rpc_password: "test"
   tasks:
     - name: Ensure latest package cache
       ansible.builtin.apt:
-        update_cache: yes
-      become: yes
+        update_cache: true
+      become: true
       when: ansible_pkg_mgr == "apt"
     - name: "Include vharmers.transmission"
       ansible.builtin.include_role:

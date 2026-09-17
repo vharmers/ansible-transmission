@@ -3,5 +3,5 @@
   ansible.builtin.service:
     name: "{{ transmission_service }}"
     state: restarted
-  become: yes
+  become: true
   when: transmission_enable

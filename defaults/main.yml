@@ -15,8 +15,8 @@ transmission_service: transmission-daemon
 # Networking
 #
 
-transmission_utp_enable: yes
-transmission_port_forwarding_enable: no
+transmission_utp_enable: true
+transmission_port_forwarding_enable: false
 transmission_encryption: prefer
 transmission_encryption_options: [no-prefer, prefer, require]
 
@@ -25,20 +25,20 @@ transmission_encryption_options: [no-prefer, prefer, require]
 #
 
 # Limit download speed
-transmission_speed_limit_down_enable: yes
+transmission_speed_limit_down_enable: true
 transmission_speed_limit_down: 5000
 
 # Limit upload speed
-transmission_speed_limit_up_enable: yes
+transmission_speed_limit_up_enable: true
 transmission_speed_limit_up: 1000
 
 # Alternate speeds
-transmission_alt_speed_enable: no
+transmission_alt_speed_enable: false
 transmission_alt_speed_down: 50
 transmission_alt_speed_up: 50
 
 # Alternate speeds schedule
-transmission_alt_speed_time_enable: no
+transmission_alt_speed_time_enable: false
 transmission_alt_speed_time_begin: 540
 transmission_alt_speed_time_day: "{{ transmission_alt_speed_time_day_options['AllDays'] }}"
 transmission_alt_speed_time_day_options:
@@ -55,28 +55,28 @@ transmission_alt_speed_time_day_options:
 transmission_alt_speed_time_end: 1020
 
 # Torrent ratio limit
-transmission_ratio_limit_enable: no
+transmission_ratio_limit_enable: false
 transmission_ratio_limit: 2
 
 # Torrent download queue
-transmission_download_queue_enable: yes
+transmission_download_queue_enable: true
 transmission_download_queue_size: 5
 
 # Torrent seeding queue
-transmission_seed_queue_enable: no
+transmission_seed_queue_enable: false
 transmission_seed_queue_size: 10
 
 # Torrent seeding idle limit
-transmission_idle_seeding_limit_enable: no
+transmission_idle_seeding_limit_enable: false
 transmission_idle_seeding_limit: 30
 
 # Torrent upload limits
-transmission_upload_limit_enable: no
+transmission_upload_limit_enable: false
 transmission_upload_limit: 100
 transmission_upload_slots_per_torrent: 14
 
 # Stalled torrents
-transmission_queue_stalled_enable: yes
+transmission_queue_stalled_enable: true
 transmission_queue_stalled_minutes: 30
 
 #
@@ -84,24 +84,24 @@ transmission_queue_stalled_minutes: 30
 #
 
 transmission_download_dir: "{{ transmission_user_home_dir }}/downloads"
-transmission_incomplete_dir_enable: no
+transmission_incomplete_dir_enable: false
 transmission_incomplete_dir: "{{ transmission_download_dir }}/incomplete"
-transmission_rename_partial_files: yes
-transmission_scrape_paused_torrents_enable: yes
+transmission_rename_partial_files: true
+transmission_scrape_paused_torrents_enable: true
 transmission_preallocation: fast
 transmission_preallocation_options: ['off', fast, full]
 transmission_umask: "022"
-transmission_prefetch_enable: yes
+transmission_prefetch_enable: true
 transmission_cache_size_mb: 4
-transmission_watch_dir_enable: no
+transmission_watch_dir_enable: false
 transmission_watch_dir: "{{ transmission_user_home_dir }}/watch"
 
 #
 # Peers
 #
 
-transmission_pex_enable: yes
-transmission_lpd_enable: no
+transmission_pex_enable: true
+transmission_lpd_enable: false
 transmission_bind_address_ipv4: "0.0.0.0"
 transmission_bind_address_ipv6: "::"
 transmission_peer_congestion_algorithm: ""
@@ -109,7 +109,7 @@ transmission_peer_id_ttl_hours: 6
 transmission_peer_limit_global: 200
 transmission_peer_limit_per_torrent: 50
 transmission_peer_port: 51413
-transmission_peer_port_random_on_start: no
+transmission_peer_port_random_on_start: false
 transmission_peer_port_random_high: 65535
 transmission_peer_port_random_low: 49152
 transmission_peer_socket_tos: default
@@ -118,20 +118,20 @@ transmission_peer_socket_tos: default
 # RPC
 #
 
-transmission_rpc_enable: yes
+transmission_rpc_enable: true
 transmission_rpc_bind_address: "0.0.0.0"
 transmission_rpc_port: 9091
 transmission_rpc_url: /transmission/
 
 # Access control
-transmission_rpc_host_whitelist_enable: yes
+transmission_rpc_host_whitelist_enable: true
 transmission_rpc_host_whitelist: []
-transmission_rpc_whitelist_enable: yes
+transmission_rpc_whitelist_enable: true
 transmission_rpc_whitelist:
   - "127.0.0.1"
 
 # Authentication
-transmission_rpc_authentication_required: yes
+transmission_rpc_authentication_required: true
 transmission_rpc_username: transmission
 transmission_rpc_password: ""
 
@@ -160,6 +160,6 @@ transmission_message_level_options: [none, error, info, debug]
 # Misc
 #
 
-transmission_dht_enable: yes
-transmission_start_added_torrents: yes
-transmission_trash_original_torrent_files: no
+transmission_dht_enable: true
+transmission_start_added_torrents: true
+transmission_trash_original_torrent_files: false
